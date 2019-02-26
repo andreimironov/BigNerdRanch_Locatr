@@ -3,6 +3,8 @@ package com.andreimironov.locatr;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -174,6 +177,19 @@ public class LocatrFragment extends Fragment {
     private class SearchTask extends AsyncTask<Location,Void,Void> {
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
+        private AlertDialog mAlertDialog;
+        private ProgressBar mProgressBar;
+
+        @Override
+        protected void onPreExecute() {
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View view = inflater.inflate(R.layout.progress_dialog, null);
+            mProgressBar = view.findViewById(R.id.progress_bar);
+            mAlertDialog = new AlertDialog.Builder(getActivity())
+                    .setView(view)
+                    .create();
+            mAlertDialog.show();
+        }
 
         @Override
         protected Void doInBackground(Location... params) {
@@ -194,6 +210,7 @@ public class LocatrFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
+            mAlertDialog.dismiss();
             mImageView.setImageBitmap(mBitmap);
         }
     }
