@@ -9,6 +9,32 @@ public class GalleryItem {
     @SerializedName("title") private String mCaption;
     @SerializedName("url_s") private String mUrl;
     @SerializedName("owner") private String mOwner;
+    @SerializedName("latitude") private double mLat;
+    @SerializedName("longitude") private double mLon;
+
+    public String getCaption() {
+        return mCaption;
+    }
+
+    public String getOwner() {
+        return mOwner;
+    }
+
+    public double getLat() {
+        return mLat;
+    }
+
+    public void setLat(double lat) {
+        mLat = lat;
+    }
+
+    public double getLon() {
+        return mLon;
+    }
+
+    public void setLon(double lon) {
+        mLon = lon;
+    }
 
     public void setOwner(String owner) {
         mOwner = owner;
@@ -45,6 +71,9 @@ public class GalleryItem {
 
     @Override
     public String toString() {
-        return mCaption;
+        return getClass().getName() + "[" +
+                "mLat:" + mLat + ", " +
+                "mLon" + mLon +
+                "]";
     }
 }
